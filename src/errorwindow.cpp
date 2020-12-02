@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <stdexcept>
 #include <cstring>
+#include <thread>
 #include <errno.h>
 
 std::vector<std::string> ErrorWindow::buildCommandLine(std::string title, std::string description) {
@@ -43,6 +44,11 @@ bool ErrorWindow::onError(std::string title, std::string errormsg) {
         int r = execv(argvc[0], (char**) argvc.data());
         printf("Show: execv() error %i %s", r, strerror(errno));
         _exit(r);
+    } else if (pid != -1) {
+        std::thread([pid]() {
+            int status;
+            (void) waitpid(pid, &status, NULL);
+        }).detach();
     }
     return true;
 }
