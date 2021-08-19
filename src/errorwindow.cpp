@@ -47,7 +47,7 @@ bool ErrorWindow::onError(std::string title, std::string errormsg) {
     } else if (pid != -1) {
         std::thread([pid]() {
             int status;
-            (void) waitpid(pid, &status, NULL);
+            (void) waitpid(pid, &status, 0);
         }).detach();
     }
     return true;
