@@ -9,7 +9,6 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setOrganizationName("Minecraft Linux Launcher");
     QCoreApplication::setOrganizationDomain("mrarm.io");
     QCoreApplication::setApplicationName("Minecraft Linux Launcher Error UI");
