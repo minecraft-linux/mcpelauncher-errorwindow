@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(ENABLE_QT_ERROR_UI "Build this QT component to show errormessages" TRUE)
 
-if (ENABLE_QT_ERROR_UI)
+if (ENABLE_QT_ERROR_UI AND (BUILD_UI OR NOT DEFINED BUILD_UI))
     find_package(Qt5 COMPONENTS Core Quick Widgets REQUIRED)
 
     find_package(Qt5LinguistTools)
@@ -37,6 +37,8 @@ if (ENABLE_QT_ERROR_UI)
     install(TARGETS mcpelauncher-error RUNTIME COMPONENT mcpelauncher-error DESTINATION bin)
 endif()
 
-add_library(mcpelauncher-errorwindow src/errorwindow.cpp)
-target_link_libraries(mcpelauncher-errorwindow gamewindow file-util)
-target_include_directories(mcpelauncher-errorwindow PUBLIC include)
+if (NOT DEFINED BUILD_CLIENT OR BUILD_CLIENT)
+    add_library(mcpelauncher-errorwindow src/errorwindow.cpp)
+    target_link_libraries(mcpelauncher-errorwindow gamewindow file-util)
+    target_include_directories(mcpelauncher-errorwindow PUBLIC include)
+endif()
